@@ -59,27 +59,28 @@ public class VendorUserHandler
                             continue;
                         }
 
-                        //Aad student
-                        VendorServiceRepository.AddVendor(name, age, address, newGender);
-                        Console.WriteLine("Vendor successfully added");
+                        //Add student
+                        string VendorID = VendorServiceRepository.AddVendor(name, age, address, newGender);
+                        Console.WriteLine($"Vendor successfully added!\n Name: {name}\n Age: {age}\n Address: {address}\n Gender: {newGender}\n VendorID: {VendorID}");
                         break;
 
                     case "2":
                         Console.WriteLine("-------------------");
-                        Console.WriteLine("Get Vendor by ID");
+                        Console.WriteLine("Vendor");
                         Console.WriteLine("-------------------");
                         Console.WriteLine("Enter Vendor ID to get lecturer: ");
-                        string searchId = Console.ReadLine();
+                        var searchId = Console.ReadLine();
                         var Vendor = VendorServiceRepository.GetVendortbyId(searchId);
 
                         if (Vendor != null)
                         {
                             Console.WriteLine(
-                                $"Found: {Vendor.Name} | {Vendor.Age} | {Vendor.Address} | {Vendor.Gender}");
+                                $"Found: Name: {Vendor.Name} \nAge: {Vendor.Age} \nAddress: {Vendor.Address} \nGender: {Vendor.Gender} \nStudentID: {Vendor.VendorId}");
                         }
                         else
                         {
                             Console.WriteLine("Vendor not found");
+   
                         }
 
                         break;
@@ -88,10 +89,22 @@ public class VendorUserHandler
                         Console.WriteLine("-------------------");
                         Console.WriteLine("Get all Lecturers");
                         Console.WriteLine("-------------------");
-                        VendorServiceRepository.GetAllVendor();
-                        break;
+                        var allVendor = VendorServiceRepository.GetAllVendor();
+                        if (allVendor.Count == 0)
+                        {
+                            Console.WriteLine("No students found");
+                        }
+                        else
+                        {
+                            foreach (var v in allVendor)
+                            {
+                                Console.WriteLine(
+                                    $" Name: {v.Name}\n Age: {v.Age}\n Address: {v.Address}\nGender: {v.Gender}\nStudendID: {v.VendorId}");
+                            }
+                        }
 
-                    case "4":
+                        break;
+                            case "4":
                         Console.WriteLine("-------------------");
                         Console.WriteLine("Update Vendor information");
                         Console.WriteLine("-------------------");
@@ -102,7 +115,16 @@ public class VendorUserHandler
                         Console.WriteLine("Enter new address: ");
                         string addressToUpdate = Console.ReadLine();
 
-                        VendorServiceRepository.UpdateVendorInfo(idToUpdate, ageToUpdate, addressToUpdate);
+                        bool UpdateSuccess = VendorServiceRepository.UpdateVendorInfo(idToUpdate, ageToUpdate, addressToUpdate);
+                        if (UpdateSuccess)
+                        {
+                            Console.WriteLine("Vendor information successfully Updated");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Update failed");
+
+                        }
                         break;
 
                     case "5":
@@ -110,7 +132,7 @@ public class VendorUserHandler
                         Console.WriteLine("Delete Vendor");
                         Console.WriteLine("-------------------");
                         Console.WriteLine("Enter Vendor ID to delete student: ");
-                        string idToDelete = Console.ReadLine();
+                        var idToDelete = Console.ReadLine();
                         bool isDeleted = VendorServiceRepository.DeleteVendor(idToDelete);
                         if (isDeleted)
                         {

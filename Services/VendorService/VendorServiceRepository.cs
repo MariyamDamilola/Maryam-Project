@@ -17,12 +17,13 @@ public class VendorServiceRepository
 
     
         //Create Student
-        public static void AddVendor(string name, string age, string address, Gender gender)
+        public static string AddVendor(string name, string age, string address, Gender gender)
         {
             string newId = Utils.GetRandomString("VND");
             var newVendor = new Vendor(name, age, address, gender) { VendorId = newId };
 
             _vendors.Add(newVendor);
+            return newId;
         }
 
         //Get by ID
@@ -38,14 +39,17 @@ public class VendorServiceRepository
         }
     
         //Update Vendor info
-        public static void UpdateVendorInfo(string vendorId, string newAddress, string newAge)
+        public static bool UpdateVendorInfo(string vendorId, string newAge, string newAddress)
         {
             var vendor = _vendors.Find(x => x.VendorId == vendorId);
             if (vendor != null)
             {
                 vendor.Address = newAddress;
                 vendor.Age = newAge;
+                return true;
             }
+
+            return false;
         }
         //Delete Vendor
         public static bool DeleteVendor(string vendorId)

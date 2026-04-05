@@ -16,12 +16,13 @@ public static class LecturerServiceRepository
 
     
         //Create Student
-        public static void AddLecturer(string name, string age, string address, Gender gender)
+        public static string AddLecturer(string name, string age, string address, Gender gender)
         {
             string newId = Utils.GetRandomString("LEC");
             var newLecturer = new Lecturer(name, age, address, gender) { StaffId = newId };
 
             _lecturers.Add(newLecturer);
+            return newId;
         }
 
         //Get by ID
@@ -36,14 +37,16 @@ public static class LecturerServiceRepository
         }
     
         //Update Student info
-        public static void UpdateStaffInfo(string staffId, string newAddress, string newAge)
+        public static bool UpdateStaffInfo(string staffId, string newAge, string newAddress)
         {
             var lecturer = _lecturers.Find(x => x.StaffId == staffId);
             if (lecturer != null)
             {
                 lecturer.Address = newAddress;
                 lecturer.Age = newAge;
+                return true;
             }
+            return false;
         }
         //Delete student
         public static bool DeleteLecturer(string staffId)

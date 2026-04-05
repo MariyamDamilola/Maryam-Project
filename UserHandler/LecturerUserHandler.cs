@@ -5,17 +5,17 @@ namespace MaryamProject.UserHandler;
 
 public static class LecturerUserHandler
 {
-     public static void Run()
+    public static void Run()
     {
         while (true)
         {
             Console.WriteLine("Admin Login");
             Console.WriteLine("------------");
-            
+
             Console.WriteLine("Enter AdminId: ");
             var adminId = Console.ReadLine();
             Console.WriteLine("------------");
-            
+
             Console.WriteLine("Enter Admin Password: ");
             var adminPass = Console.ReadLine();
 
@@ -27,12 +27,13 @@ public static class LecturerUserHandler
 
             Console.WriteLine("---------------------");
             Console.WriteLine("Login successful");
-            
-            
+
+
             var running = true;
             while (running)
             {
-                Console.WriteLine("1. Add Lecturer \n2. Get staff by ID \n3. View all Lecturers \n4. Update Lecturer Information \n5. Delete Lecturer \n6. Exit");
+                Console.WriteLine(
+                    "1. Add Lecturer \n2. Get staff by ID \n3. View all Lecturers \n4. Update Lecturer Information \n5. Delete Lecturer \n6. Exit");
                 var option = Console.ReadLine();
                 switch (option)
                 {
@@ -44,11 +45,11 @@ public static class LecturerUserHandler
                         Console.WriteLine("Lecturer Age: ");
                         var age = Console.ReadLine();
                         Console.WriteLine("-----------------------");
-                        
+
                         Console.WriteLine("Lecturer address: ");
                         var address = Console.ReadLine();
                         Console.WriteLine("-----------------------");
-                        
+
                         Console.WriteLine("Lecturer Gender \n1. Male \n2. Female");
                         var genderchoice = Console.ReadLine();
 
@@ -57,37 +58,53 @@ public static class LecturerUserHandler
                             Console.WriteLine("Invalid gender");
                             continue;
                         }
-                        
-                        //Aad student
-                    LecturerServiceRepository.AddLecturer(name, age, address, newGender);
-                        Console.WriteLine("Lecturer successfully added");
+
+                        //Add student
+                        string StaffId = LecturerServiceRepository.AddLecturer(name, age, address, newGender);
+                        Console.WriteLine(
+                            $"Student successfully added!\n Name: {name}\n Age: {age}\n Address: {address}\n Gender: {newGender}\n StudentID: {StaffId}");
                         break;
-                    
+
                     case "2":
                         Console.WriteLine("-------------------");
-                        Console.WriteLine("Get Lecturer by ID");
+                        Console.WriteLine("All Lecturer");
                         Console.WriteLine("-------------------");
                         Console.WriteLine("Enter Lecturer ID to get lecturer: ");
                         string searchId = Console.ReadLine();
                         var Lecturer = LecturerServiceRepository.GetLecturetbyId(searchId);
-                        
+
                         if (Lecturer != null)
                         {
-                         Console.WriteLine($"Found: {Lecturer.Name} | {Lecturer.Age} | {Lecturer.Address} | {Lecturer.Gender}"); 
+                            Console.WriteLine(
+                                $"Found \nName: {Lecturer.Name} \nAge: {Lecturer.Age} \nAddress: {Lecturer.Address} \nGender: {Lecturer.Gender} \nStaffID: {Lecturer.StaffId}");
                         }
                         else
                         {
                             Console.WriteLine("Lecturer not found");
                         }
+
                         break;
-                    
+
                     case "3":
                         Console.WriteLine("-------------------");
-                        Console.WriteLine("Get all Lecturers");
+                        Console.WriteLine("All Lecturers");
                         Console.WriteLine("-------------------");
-                        LecturerServiceRepository.GetAllStaff();
+                        var allStaff = LecturerServiceRepository.GetAllStaff();
+                        if (allStaff.Count == 0)
+                        {
+                            Console.WriteLine("No Lecturer found");
+                        }
+                        else
+                        {
+                            foreach (var l in allStaff)
+                            {
+                                Console.WriteLine(
+                                    $" Name: {l.Name}\n Age: {l.Age}\n Address: {l.Address}\nGender: {l.Gender} \nStudentID: {l.StaffId}");
+                            }
+                        }
+
                         break;
-                    
+
                     case "4":
                         Console.WriteLine("-------------------");
                         Console.WriteLine("Update Lecturer information");
@@ -99,9 +116,19 @@ public static class LecturerUserHandler
                         Console.WriteLine("Enter new address: ");
                         string addressToUpdate = Console.ReadLine();
 
-                        LecturerServiceRepository.UpdateStaffInfo(idToUpdate, ageToUpdate, addressToUpdate);
+                        bool UpdateSuccess =
+                            LecturerServiceRepository.UpdateStaffInfo(idToUpdate, ageToUpdate, addressToUpdate);
+                        if (UpdateSuccess)
+                        {
+                            Console.WriteLine("Lecturer information successfully Updated");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Update failed");
+                        }
+
                         break;
-                    
+
                     case "5":
                         Console.WriteLine("-------------------");
                         Console.WriteLine("Delete Lecturer");
@@ -117,8 +144,9 @@ public static class LecturerUserHandler
                         {
                             Console.WriteLine("Lecturer ID not found");
                         }
+
                         break;
-                    
+
                     case "6":
                         running = false;
                         break;
@@ -129,5 +157,4 @@ public static class LecturerUserHandler
             }
         }
     }
-
 }

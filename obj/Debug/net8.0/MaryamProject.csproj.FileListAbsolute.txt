@@ -1,0 +1,15 @@
+C:\Users\ANYTHING\RiderProjects\MaryamProject\bin\Debug\net8.0\MaryamProject.exe
+C:\Users\ANYTHING\RiderProjects\MaryamProject\bin\Debug\net8.0\MaryamProject.deps.json
+C:\Users\ANYTHING\RiderProjects\MaryamProject\bin\Debug\net8.0\MaryamProject.runtimeconfig.json
+C:\Users\ANYTHING\RiderProjects\MaryamProject\bin\Debug\net8.0\MaryamProject.dll
+C:\Users\ANYTHING\RiderProjects\MaryamProject\bin\Debug\net8.0\MaryamProject.pdb
+C:\Users\ANYTHING\RiderProjects\MaryamProject\obj\Debug\net8.0\MaryamProject.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ANYTHING\RiderProjects\MaryamProject\obj\Debug\net8.0\MaryamProject.AssemblyInfoInputs.cache
+C:\Users\ANYTHING\RiderProjects\MaryamProject\obj\Debug\net8.0\MaryamProject.AssemblyInfo.cs
+C:\Users\ANYTHING\RiderProjects\MaryamProject\obj\Debug\net8.0\MaryamProject.csproj.CoreCompileInputs.cache
+C:\Users\ANYTHING\RiderProjects\MaryamProject\obj\Debug\net8.0\MaryamProject.sourcelink.json
+C:\Users\ANYTHING\RiderProjects\MaryamProject\obj\Debug\net8.0\MaryamProject.dll
+C:\Users\ANYTHING\RiderProjects\MaryamProject\obj\Debug\net8.0\refint\MaryamProject.dll
+C:\Users\ANYTHING\RiderProjects\MaryamProject\obj\Debug\net8.0\MaryamProject.pdb
+C:\Users\ANYTHING\RiderProjects\MaryamProject\obj\Debug\net8.0\MaryamProject.genruntimeconfig.cache
+C:\Users\ANYTHING\RiderProjects\MaryamProject\obj\Debug\net8.0\ref\MaryamProject.dll

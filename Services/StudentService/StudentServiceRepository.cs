@@ -16,12 +16,13 @@ public static class StudentServiceRepository
 
     
     //Create Student
-    public static void AddStudent(string name, string age, string address, Gender gender)
+    public static string AddStudent(string name, string age, string address, Gender gender)
     {
         string newId = Utils.GetRandomString("STD");
         var newStudent = new Student(name, age, address, gender) { StudentId = newId };
 
-        _students.Add(newStudent);
+       _students.Add(newStudent);
+       return newId;
     }
 
     //Get by ID
@@ -36,14 +37,17 @@ public static class StudentServiceRepository
     }
     
     //Update Student info
-    public static void UpdateStudent(string studentId, string newAddress, string newAge)
+    public static bool UpdateStudent(string studentId, string newAge, string newAddress)
     {
         var student = _students.Find(x => x.StudentId == studentId);
         if (student != null)
         {
             student.Address = newAddress;
             student.Age = newAge;
+            return true;
         }
+
+        return false;
     }
     //Delete student
     public static bool DeleteStudent(string studentId)

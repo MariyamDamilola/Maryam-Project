@@ -12,28 +12,29 @@ public static class StudentUserHandler
         {
             Console.WriteLine("Admin Login");
             Console.WriteLine("------------");
-            
+
             Console.WriteLine("Enter AdminId: ");
             var adminId = Console.ReadLine();
             Console.WriteLine("------------");
-            
+
             Console.WriteLine("Enter Admin Password: ");
             var adminPass = Console.ReadLine();
 
             if (!(StudentServiceRepository.ValidateAdmin(adminId, adminPass)))
             {
-                Console.WriteLine("Admin input");
+                Console.WriteLine("Invalid Admin input");
                 return;
             }
 
             Console.WriteLine("---------------------");
             Console.WriteLine("Login successful");
-            
-            
+
+
             var running = true;
             while (running)
             {
-                Console.WriteLine("1. Add Student \n2. Get student by ID \n3. View all students \n4. Update student Information \n5. Delete student \n6.Exit");
+                Console.WriteLine(
+                    "1. Add Student \n2. Get student by ID \n3. View all students \n4. Update student Information \n5. Delete student \n6.Exit");
                 var option = Console.ReadLine();
                 switch (option)
                 {
@@ -45,11 +46,11 @@ public static class StudentUserHandler
                         Console.WriteLine("Student Age: ");
                         var age = Console.ReadLine();
                         Console.WriteLine("-----------------------");
-                        
+
                         Console.WriteLine("Student address: ");
                         var address = Console.ReadLine();
                         Console.WriteLine("-----------------------");
-                        
+
                         Console.WriteLine("Student Gender \n1. Male \n2. Female");
                         var genderchoice = Console.ReadLine();
 
@@ -58,37 +59,53 @@ public static class StudentUserHandler
                             Console.WriteLine("Invalid gender");
                             continue;
                         }
-                        
-                        //Aad student
-                    StudentServiceRepository.AddStudent(name, age, address, newGender);
-                        Console.WriteLine("Student successfully added");
+
+                        //Add student
+                        string StudentId = StudentServiceRepository.AddStudent(name, age, address, newGender);
+                        Console.WriteLine($"Student successfully added!\n Name: {name}\n Age: {age}\n Address: {address}\n Gender: {newGender}\n StudentID: {StudentId}");
                         break;
-                    
+
                     case "2":
                         Console.WriteLine("-------------------");
-                        Console.WriteLine("Get student by ID");
+                        Console.WriteLine("All students");
                         Console.WriteLine("-------------------");
                         Console.WriteLine("Enter student ID to get student: ");
-                        string searchId = Console.ReadLine();
+                        var searchId = Console.ReadLine();
                         var student = StudentServiceRepository.GetStudentbyId(searchId);
-                        
+
                         if (student != null)
                         {
-                         Console.WriteLine($"Found: {student.Name} | {student.Age} | {student.Address} | {student.Gender}"); 
+                            Console.WriteLine(
+                                $"Found: Name: {student.Name} \nAge: {student.Age} \nAddress: {student.Address} \nGender: {student.Gender} \nStudentID: {student.StudentId}");
                         }
                         else
                         {
                             Console.WriteLine("Student not found");
                         }
+
                         break;
-                    
+
                     case "3":
                         Console.WriteLine("-------------------");
-                        Console.WriteLine("Get all student");
+                        Console.WriteLine("All students");
                         Console.WriteLine("-------------------");
-                        StudentServiceRepository.GetAllStudents();
+                        var allStudent = StudentServiceRepository.GetAllStudents();
+                        if (allStudent.Count == 0)
+                        {
+                            Console.WriteLine("No students found");
+                        }
+                        else
+                        {
+                            foreach (var s in allStudent)
+                            {
+                                Console.WriteLine(
+                                    $" Name: {s.Name}\n Age: {s.Age}\n Address: {s.Address}\nGender: {s.Gender}\nStudendID: {s.StudentId}");
+
+                            }
+                        }
+
                         break;
-                    
+
                     case "4":
                         Console.WriteLine("-------------------");
                         Console.WriteLine("Update student information");
@@ -99,10 +116,20 @@ public static class StudentUserHandler
                         string ageToUpdate = Console.ReadLine();
                         Console.WriteLine("Enter new address: ");
                         string addressToUpdate = Console.ReadLine();
+                        bool UpdateSuccess =
+                            StudentServiceRepository.UpdateStudent(idToUpdate, ageToUpdate, addressToUpdate);
+                        if (UpdateSuccess)
+                        {
+                            Console.WriteLine("Student information successfully Updated");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Update failed");
 
-                        StudentServiceRepository.UpdateStudent(idToUpdate, ageToUpdate, addressToUpdate);
+                        }
+
                         break;
-                    
+
                     case "5":
                         Console.WriteLine("-------------------");
                         Console.WriteLine("Delete student");
@@ -118,8 +145,9 @@ public static class StudentUserHandler
                         {
                             Console.WriteLine("Student ID not found");
                         }
+
                         break;
-                    
+
                     case "6":
                         running = false;
                         break;
